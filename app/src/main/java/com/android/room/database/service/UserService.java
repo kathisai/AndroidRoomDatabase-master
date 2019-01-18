@@ -1,7 +1,5 @@
 package com.android.room.database.service;
 
-import android.arch.persistence.room.Insert;
-
 import com.android.room.database.db.entity.Employee;
 
 import java.util.List;

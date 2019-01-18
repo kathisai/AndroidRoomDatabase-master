@@ -29,10 +29,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.room.database.db.AppDatabase;
-import com.android.room.database.db.dao.EmployeeSiteJoinDao;
 import com.android.room.database.db.entity.Employee;
-import com.android.room.database.db.entity.EmployeeSite;
 import com.android.room.database.db.entity.Site;
 import com.android.room.database.service.serviceImpl.SiteServiceImpl;
 import com.android.room.database.service.serviceImpl.UserServiceImpl;

@@ -6,13 +6,11 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.android.room.database.db.dao.EmployeeDao;
-import com.android.room.database.db.dao.EmployeeSiteJoinDao;
 import com.android.room.database.db.dao.SiteDao;
 import com.android.room.database.db.entity.Employee;
-import com.android.room.database.db.entity.EmployeeSite;
 import com.android.room.database.db.entity.Site;
 
-@Database(entities = {Employee.class, Site.class, EmployeeSite.class}, version = 1)
+@Database(entities = {Employee.class, Site.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase appDatabase = null;
 
@@ -36,6 +34,5 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract SiteDao siteDao();
 
-    public abstract EmployeeSiteJoinDao getEmployeeDao();
 
 }
