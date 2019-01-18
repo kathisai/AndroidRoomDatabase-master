@@ -6,9 +6,9 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 public class Employee {
-
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    @ColumnInfo(name = "empolyeeID")
+    private int empolyeeID;
 
     @ColumnInfo(name = "userID")
     private int userID;
@@ -21,10 +21,6 @@ public class Employee {
 
     @ColumnInfo(name = "email")
     private String email;
-
-
-    @ColumnInfo(name = "employeeId")
-    private int empolyeeID;
 
     public int getUserID() {
         return userID;
@@ -66,11 +62,4 @@ public class Employee {
         this.empolyeeID = empolyeeID;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 }

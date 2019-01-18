@@ -18,6 +18,6 @@ public interface EmployeeSiteJoinDao {
     @Insert
     void insertAll(EmployeeSite... employeeSites);
 
-    @Query("SELECT * FROM employee INNER JOIN employee_site_join ON employee.employeeId=employee_site_join.employeeId WHERE employee_site_join.siteId=:siteID")
-    List<Employee> getEmployeeBySite(final int siteID);
+//    @Query("SELECT * FROM employee INNER JOIN employee_site_join ON employee.empolyeeID=employee_site_join.empolyeeID WHERE employee_site_join.siteId=:siteID")
+//    List<Employee> getEmployeeBySite(final int siteID);
 }

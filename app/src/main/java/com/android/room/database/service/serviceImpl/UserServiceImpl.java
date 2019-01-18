@@ -33,4 +33,9 @@ public class UserServiceImpl implements UserService {
     public void insertAll(Employee... employees) {
         userDao.insertAll(employees);
     }
+
+    @Override
+    public List<Employee> getEmployeeBySite(int siteID) {
+       return userDao.findBooksBorrowedByName(siteID);
+    }
 }

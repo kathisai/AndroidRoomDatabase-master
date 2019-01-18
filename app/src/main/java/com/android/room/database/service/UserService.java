@@ -18,4 +18,6 @@ public interface UserService {
     List<Employee> getAll();
 
     void insertAll(Employee... employees);
+
+    List<Employee> getEmployeeBySite(int siteID);
 }

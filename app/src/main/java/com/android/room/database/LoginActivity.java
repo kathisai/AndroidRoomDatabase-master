@@ -356,16 +356,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 Site site = new Site();
                 site.setEmpolyeeID(employee.getEmpolyeeID());
-                site.setSiteID(1000);
+                site.setSiteID(1001);
                 siteService.insertAll(site);
 
 //                EmployeeSite employeeSite = new EmployeeSite();
 //                employeeSite.setEmployeeId(employee.getEmpolyeeID());
 //                employeeSite.setSiteId(site.getSiteID());
 
-                EmployeeSiteJoinDao employeeSiteJoinDao =  AppDatabase.getInstance(LoginActivity.this).getEmployeeDao();
-                employeeSiteJoinDao.insertAll(new EmployeeSite(559925628,1000));
+//                Thread.sleep(200000);
 
+//                EmployeeSiteJoinDao employeeSiteJoinDao =  AppDatabase.getInstance(LoginActivity.this).getEmployeeDao();
+//                employeeSiteJoinDao.insert(new EmployeeSite(employee.getEmpolyeeID(),site.getSiteID()));
+
+                userService.getEmployeeBySite(1000);
 
 
                 Log.i(TAG, "user inserted in db..." + employee);

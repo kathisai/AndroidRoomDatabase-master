@@ -3,26 +3,31 @@ package com.android.room.database.db.entity;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.Nullable;
 
 @Entity(tableName = "employee_site_join",
-        primaryKeys = { "employeeId", "siteID" },
         foreignKeys = {
                 @ForeignKey(entity = Employee.class,
-                            parentColumns = "id",
-                            childColumns = "employeeId"),
+                            parentColumns = "empolyeeID",
+                            childColumns = "empolyeeID"),
                 @ForeignKey(entity = Site.class,
-                            parentColumns = "id",
+                            parentColumns = "empolyeeID",
                             childColumns = "siteID")
                 })
 public class EmployeeSite {
-    @ColumnInfo(name = "employeeId")
-    public  int employeeId;
+
+
+
+    @PrimaryKey
+    @ColumnInfo(name = "empolyeeID")
+    public  int empolyeeID;
 
     @ColumnInfo(name = "siteID")
     public  int siteId;
 
     public EmployeeSite(int employeeId, int siteId) {
-        this.employeeId = employeeId;
+        this.empolyeeID = employeeId;
         this.siteId = siteId;
     }
 
@@ -30,16 +35,21 @@ public class EmployeeSite {
     }
 
     public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+        this.empolyeeID = employeeId;
     }
 
-    public void setSiteId(int siteId) {
-        this.siteId = siteId;
+
+
+
+    @Nullable
+    public int getEmpolyeeID() {
+        return empolyeeID;
     }
 
-    public int getEmployeeId() {
-        return employeeId;
+    public void setEmpolyeeID(@Nullable int empolyeeID) {
+        this.empolyeeID = empolyeeID;
     }
+
 
     public int getSiteId() {
         return siteId;
