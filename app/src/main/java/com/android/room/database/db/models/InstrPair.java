@@ -2,7 +2,11 @@ package com.android.room.database.db.models;
 
 public class InstrPair {
 
-    int key;
-    String value;
+    public int key;
+    public String value;
 
+    public InstrPair(int key, String value) {
+        this.key = key;
+        this.value = value;
+    }
 }

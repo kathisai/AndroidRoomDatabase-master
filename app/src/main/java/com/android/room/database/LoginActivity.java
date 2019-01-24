@@ -29,8 +29,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.room.database.db.entity.Buildings;
 import com.android.room.database.db.entity.Employee;
 import com.android.room.database.db.entity.Site;
+import com.android.room.database.db.models.InstrPair;
+import com.android.room.database.db.models.LookupList;
+import com.android.room.database.service.serviceImpl.BuildingsServiceImpl;
 import com.android.room.database.service.serviceImpl.SiteServiceImpl;
 import com.android.room.database.service.serviceImpl.UserServiceImpl;
 
@@ -74,6 +78,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private SiteServiceImpl siteService;
 
+    private BuildingsServiceImpl buildingsService;
+
     private List<Employee> employees = new ArrayList<>();
 
     private TextView usersTextView;
@@ -86,16 +92,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //init service
         userService = new UserServiceImpl(LoginActivity.this);
         siteService = new SiteServiceImpl(LoginActivity.this);
+        buildingsService = new BuildingsServiceImpl(LoginActivity.this);
         usersTextView = findViewById(R.id.usersTextView);
 
         getUsersFromDB();
 
 
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = findViewById(R.id.email);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -107,7 +114,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -356,16 +363,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 site.setSiteID(1001);
                 siteService.insertAll(site);
 
-//                EmployeeSite employeeSite = new EmployeeSite();
-//                employeeSite.setEmployeeId(employee.getEmpolyeeID());
-//                employeeSite.setSiteId(site.getSiteID());
-
-//                Thread.sleep(200000);
-
-//                EmployeeSiteJoinDao employeeSiteJoinDao =  AppDatabase.getInstance(LoginActivity.this).getEmployeeDao();
-//                employeeSiteJoinDao.insert(new EmployeeSite(employee.getEmpolyeeID(),site.getSiteID()));
-
                 userService.getEmployeeBySite(1000);
+
+                List<InstrPair> instrPairList = new ArrayList<>();
+                instrPairList.add(new InstrPair(100, "PairOne"));
+                instrPairList.add(new InstrPair(101, "PairTow"));
+                instrPairList.add(new InstrPair(102, "PairThree"));
+                instrPairList.add(new InstrPair(103, "PairFive"));
+                LookupList list = new LookupList("one", instrPairList);
+                Buildings buildings = new Buildings(1001, list);
+
+                buildingsService.insertAll(buildings);
+
+                List<LookupList> lists = buildingsService.getAllLooUpListbySiteID(1001);
 
 
                 Log.i(TAG, "user inserted in db..." + employee);

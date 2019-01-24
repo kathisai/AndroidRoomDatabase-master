@@ -5,8 +5,10 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 public class SiteAttedance {
+    
     @PrimaryKey
     int attendanceid;
+
     int siteId;
 
 }

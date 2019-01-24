@@ -5,7 +5,11 @@ import java.util.List;
 
 public class LookupList {
 
-    String name;
-    List<InstrPair> options;
+    public String name;
+    public List<InstrPair> options;
 
+    public LookupList(String name, List<InstrPair> options) {
+        this.name = name;
+        this.options = options;
+    }
 }
