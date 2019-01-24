@@ -22,12 +22,12 @@ public class AttendenceTypeServiceImpl implements AttendenceTypeService {
     }
 
     @Override
-    public void insertAll(AttendanceTypes... employees) {
-        attendenceTypesDao.insertAll(employees);
+    public void insertAll(AttendanceTypes... attendanceTypes) {
+        attendenceTypesDao.insertAll(attendanceTypes);
     }
 
     @Override
     public List<AttendanceTypes> getAttendenceTypes(int siteID) {
-        return attendenceTypesDao.getAllLooUpListbySiteID(siteID);
+        return attendenceTypesDao.findAttendenceTypesBySiteID(siteID);
     }
 }

@@ -5,11 +5,11 @@ import android.content.Context;
 import com.android.room.database.db.AppDatabase;
 import com.android.room.database.db.dao.SiteDao;
 import com.android.room.database.db.entity.Site;
-import com.android.room.database.service.SiteService;
+import com.android.room.database.service.SiteServiceService;
 
 import java.util.List;
 
-public class SiteServiceImpl implements SiteService {
+public class SiteServiceImpl implements SiteServiceService {
 
     private SiteDao siteDao;
 

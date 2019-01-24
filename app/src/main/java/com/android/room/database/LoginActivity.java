@@ -29,14 +29,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.room.database.db.entity.AttendanceTypes;
 import com.android.room.database.db.entity.Buildings;
 import com.android.room.database.db.entity.Employee;
 import com.android.room.database.db.entity.Site;
+import com.android.room.database.db.entity.SiteAttedance;
 import com.android.room.database.db.models.InstrPair;
 import com.android.room.database.db.models.LookupList;
+import com.android.room.database.db.models.Reasons;
+import com.android.room.database.service.serviceImpl.AttendenceTypeServiceImpl;
 import com.android.room.database.service.serviceImpl.BuildingsServiceImpl;
 import com.android.room.database.service.serviceImpl.SiteServiceImpl;
 import com.android.room.database.service.serviceImpl.UserServiceImpl;
+import com.android.room.database.service.serviceImpl.siteAttendenceServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +85,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private BuildingsServiceImpl buildingsService;
 
+    private siteAttendenceServiceImpl siteAttendenceService;
+
+    private AttendenceTypeServiceImpl attendenceTypeService;
+
     private List<Employee> employees = new ArrayList<>();
 
     private TextView usersTextView;
@@ -93,6 +102,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         userService = new UserServiceImpl(LoginActivity.this);
         siteService = new SiteServiceImpl(LoginActivity.this);
         buildingsService = new BuildingsServiceImpl(LoginActivity.this);
+        siteAttendenceService = new siteAttendenceServiceImpl(LoginActivity.this);
+        attendenceTypeService = new AttendenceTypeServiceImpl(LoginActivity.this);
         usersTextView = findViewById(R.id.usersTextView);
 
         getUsersFromDB();
@@ -364,18 +375,39 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 siteService.insertAll(site);
 
                 userService.getEmployeeBySite(1000);
-
+                // TASK 1
+                //TODO as List<InstrPain> is primary key make sure all objects different then others
                 List<InstrPair> instrPairList = new ArrayList<>();
                 instrPairList.add(new InstrPair(100, "PairOne"));
                 instrPairList.add(new InstrPair(101, "PairTow"));
                 instrPairList.add(new InstrPair(102, "PairThree"));
-                instrPairList.add(new InstrPair(103, "PairFive"));
+                instrPairList.add(new InstrPair(103, "PairSix1"));
                 LookupList list = new LookupList("one", instrPairList);
                 Buildings buildings = new Buildings(1001, list);
 
                 buildingsService.insertAll(buildings);
 
                 List<LookupList> lists = buildingsService.getAllLooUpListbySiteID(1001);
+
+
+                // TASK 2
+
+                List<Reasons> reasons = new ArrayList<>();
+                Reasons reasons1 = new Reasons(123, "ReasonOne");
+                Reasons reasons2 = new Reasons(143, "ReasonThree");
+                reasons.add(reasons1);
+                reasons.add(reasons2);
+
+
+                AttendanceTypes attendanceTypes = new AttendanceTypes(4, "attendenceNameOne", reasons);
+                attendenceTypeService.insertAll(attendanceTypes);
+
+                SiteAttedance siteAttedance = new SiteAttedance(4, 1001);
+
+
+                siteAttendenceService.insertAll(siteAttedance);
+
+                attendenceTypeService.getAttendenceTypes(1001);
 
 
                 Log.i(TAG, "user inserted in db..." + employee);
