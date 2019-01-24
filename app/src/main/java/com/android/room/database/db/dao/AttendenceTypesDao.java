@@ -12,15 +12,19 @@ import java.util.List;
 @Dao
 public interface AttendenceTypesDao {
 
-    @Query("SELECT * FROM buildings")
+    @Query("SELECT * FROM attendancetypes")
     List<AttendanceTypes> getAll();
 
-    @Query("SELECT * FROM buildings WHERE siteId IN (:siteID)")
-    List<AttendanceTypes> getAllLooUpListbySiteID(int siteID);
+    @Query("SELECT * FROM attendancetypes WHERE attendanceid IN (:attendeceID)")
+    List<AttendanceTypes> getAllLooUpListbySiteID(int attendeceID);
 
     @Insert
     void insertAll(AttendanceTypes... employee);
 
     @Delete
     void delete(AttendanceTypes employee);
+
+    @Query("SELECT * FROM AttendanceTypes INNER JOIN SiteAttedance ON siteattedance.attendanceid = AttendanceTypes.attendanceid  WHERE SiteAttedance.siteID=:siteID"
+    )
+    List<AttendanceTypes> findAttendenceTypesBySiteID(int siteID);
 }
