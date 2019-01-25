@@ -29,14 +29,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.room.database.db.entity.AttendanceTypes;
-import com.android.room.database.db.entity.Buildings;
+import com.android.room.database.db.AppDatabase;
+import com.android.room.database.db.dao.BuildingDao;
+import com.android.room.database.db.dao.UserBuildingsDao;
+import com.android.room.database.db.entity.Building;
 import com.android.room.database.db.entity.Employee;
-import com.android.room.database.db.entity.Site;
-import com.android.room.database.db.entity.SiteAttedance;
-import com.android.room.database.db.models.InstrPair;
-import com.android.room.database.db.models.LookupList;
-import com.android.room.database.db.models.Reasons;
+import com.android.room.database.db.entity.UserBuildings;
 import com.android.room.database.service.serviceImpl.AttendenceTypeServiceImpl;
 import com.android.room.database.service.serviceImpl.BuildingsServiceImpl;
 import com.android.room.database.service.serviceImpl.SiteServiceImpl;
@@ -45,7 +43,6 @@ import com.android.room.database.service.serviceImpl.siteAttendenceServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -357,61 +354,80 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // creating object manually this can be done using dependency injection
                 Log.i(TAG, "user from db...all employees - " + userService.getAll().size());
 
-                Employee employee = new Employee();
-                employee.setUserID(new Random().nextInt());
-                employee.setEmail(mEmail);
-                employee.setFirstName("First Name");
-                employee.setLastName("Last Name");
-                employee.setEmpolyeeID(new Random().nextInt());
-
-
-                userService.insertAll(employee);
-                employees = userService.getAll();
-
-
-                Site site = new Site();
-                site.setEmpolyeeID(employee.getEmpolyeeID());
-                site.setSiteID(1001);
-                siteService.insertAll(site);
-
-                userService.getEmployeeBySite(1000);
-                // TASK 1
-                //TODO as List<InstrPain> is primary key make sure all objects different then others
-                List<InstrPair> instrPairList = new ArrayList<>();
-                instrPairList.add(new InstrPair(100, "PairOne"));
-                instrPairList.add(new InstrPair(101, "PairTow"));
-                instrPairList.add(new InstrPair(102, "PairThree"));
-                instrPairList.add(new InstrPair(103, "PairSix1"));
-                LookupList list = new LookupList("one", instrPairList);
-                Buildings buildings = new Buildings(1001, list);
-
-                buildingsService.insertAll(buildings);
-
-                List<LookupList> lists = buildingsService.getAllLooUpListbySiteID(1001);
+//                Employee employee = new Employee();
+//                employee.setUserID(new Random().nextInt());
+//                employee.setEmail(mEmail);
+//                employee.setFirstName("First Name");
+//                employee.setLastName("Last Name");
+//                employee.setEmpolyeeID(new Random().nextInt());
+//
+//
+//                userService.insertAll(employee);
+//                employees = userService.getAll();
+//
+//
+//                Site site = new Site();
+//                site.setEmpolyeeID(employee.getEmpolyeeID());
+//                site.setSiteID(1001);
+//                siteService.insertAll(site);
+//
+//                userService.getEmployeeBySite(1000);
+//                // TASK 1
+//                //TODO as List<InstrPain> is primary key make sure all objects different then others
+//                List<InstrPair> instrPairList = new ArrayList<>();
+//                instrPairList.add(new InstrPair(100, "PairOne"));
+//                instrPairList.add(new InstrPair(101, "PairTow"));
+//                instrPairList.add(new InstrPair(102, "PairThree"));
+//                instrPairList.add(new InstrPair(103, "PairSix1"));
+//                LookupList list = new LookupList("one", instrPairList);
+//                Buildings buildings = new Buildings(1001, list);
+//
+//                buildingsService.insertAll(buildings);
+//
+//                List<LookupList> lists = buildingsService.getAllLooUpListbySiteID(1001);
 
 
                 // TASK 2
 
-                List<Reasons> reasons = new ArrayList<>();
-                Reasons reasons1 = new Reasons(123, "ReasonOne");
-                Reasons reasons2 = new Reasons(143, "ReasonThree");
-                reasons.add(reasons1);
-                reasons.add(reasons2);
+//                List<Reasons> reasons = new ArrayList<>();
+//                Reasons reasons1 = new Reasons(123, "ReasonOne");
+//                Reasons reasons2 = new Reasons(143, "ReasonThree");
+//                reasons.add(reasons1);
+//                reasons.add(reasons2);
+//
+//
+//                AttendanceTypes attendanceTypes = new AttendanceTypes(4, "attendenceNameOne", reasons);
+//                attendenceTypeService.insertAll(attendanceTypes);
+//
+//                SiteAttedance siteAttedance = new SiteAttedance(4, 1001);
+//
+//
+//                siteAttendenceService.insertAll(siteAttedance);
+//
+//                attendenceTypeService.getAttendenceTypes(1001);
+
+                //TASK 3
+                BuildingDao buildingDao = AppDatabase.getInstance(LoginActivity.this).buildingDao();
+                Building buildingOne = new Building(10, "buildingOne", 111, 1001);
+                Building buildingTwo = new Building(11, "buildingTwo", 112, 1002);
+
+                buildingDao.insertAll(buildingOne);
+                buildingDao.insertAll(buildingTwo);
+
+                UserBuildingsDao userBuildingsDao = AppDatabase.getInstance(LoginActivity.this).userBuildingsDao();
+                UserBuildings userBuildingsOne = new UserBuildings(buildingOne.getBuildingId(), 100);
+                UserBuildings userBuildingsTwo = new UserBuildings(buildingOne.getBuildingId(), 100);
+                userBuildingsDao.insertAll(userBuildingsOne);
+                userBuildingsDao.insertAll(userBuildingsTwo);
+
+                for (Building building : buildingDao.getBuildingByUserID(100)) {
+                    Log.d("FOUND Buildings: ", building.getName());
+
+                }
 
 
-                AttendanceTypes attendanceTypes = new AttendanceTypes(4, "attendenceNameOne", reasons);
-                attendenceTypeService.insertAll(attendanceTypes);
-
-                SiteAttedance siteAttedance = new SiteAttedance(4, 1001);
-
-
-                siteAttendenceService.insertAll(siteAttedance);
-
-                attendenceTypeService.getAttendenceTypes(1001);
-
-
-                Log.i(TAG, "user inserted in db..." + employee);
-                Log.i(TAG, "user from db...all employees - " + userService.getAll().size());
+//                Log.i(TAG, "user inserted in db..." + employee);
+//                Log.i(TAG, "user from db...all employees - " + userService.getAll().size());
 
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
